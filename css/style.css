@@ -17,6 +17,7 @@
   #logo img{
     height: 8vh;
   }
+
   #display{
     width: 50vw;
   }
@@ -46,7 +47,6 @@
     display:none;
     width: 90vw;
     padding:10px;
-   
   }
   
   #close-modal{
