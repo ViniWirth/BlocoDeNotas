@@ -65,3 +65,58 @@ const loadNotes = () => {
   }
   return notes;
 };
+
+const listNotes = () => {
+  let listNotes = localStorage.getItem("notes");
+  listNotes = JSON.parse(listNotes);
+  listNotes.forEach((item) => {
+    const divCard = document.createElement("div");
+    divCard.className = "card";
+    divCard.style.width = "18rem";
+    const divCardBody = document.createElement("div");
+    divCardBody.className = "card-body";
+    const h1 = document.createElement("h1");
+    h1.innerText = item.title;
+    const pContent = document.createElement("p");
+    pContent.innerText = item.content;
+    const pLastTime = document.createElement("p");
+    let lastTime = new Date(item.lastTime).toLocaleDateString("pt-BR");
+    const pLastHour = document.createElement("p");
+    let lastHour = new Date(item.lastHour).toLocaleTimeString("pt-BR");
+    pLastTime.innerText = "Ultima alteração: " + lastTime;
+    pLastHour.innerText = "Horário: " + lastHour;
+    divCardBody.appendChild(h1);
+    divCardBody.appendChild(pContent);
+    divCardBody.appendChild(pLastTime);
+    divCardBody.appendChild(pLastHour);
+
+    divCard.appendChild(divCardBody);
+    notes.appendChild(divCard);
+    divCard.addEventListener("click", (evt) => {
+      evt.preventDefault();
+      showNote(item);
+    });
+  });
+};
+
+const showNote = (note) => {
+  
+  notes.style.display = "none";
+  addNote.style.display = "none";
+  modalView.style.display = "block";
+
+  document.querySelector("#title-note").innerHTML ="<h1>" + note.title + "</h1>";
+  document.querySelector('#content-note').innerHTML = "<p>"+note.content+"</p>";
+  document.querySelector('#content-note').innerHTML += "<p>"+new Date(note.lastTime).toLocaleDateString('pt-BR')+"</p>";
+
+ /* document.querySelector('#content-note')
+  .appendChild(document.createElement('p')
+  .appendChild(document.createTextNode(note.content)));
+
+  document.querySelector('#content-note')
+  .appendChild(document.createElement('p')
+  .appendChild(document.createTextNode(
+    new Date(note.lastTime).toLocaleDateString('pt-BR'))));*/
+};
+
+listNotes();
