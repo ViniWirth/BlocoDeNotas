@@ -12,6 +12,9 @@ let notes = document.querySelector("#notes"); //Lista divs com dados das notas
 let btnSaveNote = document.querySelector("#btn-save-note"); //icone para salvar nota
 let btnCloseNote = document.querySelector("#btn-close-note"); //icone para fechar modal de edição de nota.
 
+let btnEditNote = document.querySelector(".editButton");
+let btnDeleteNote = document.querySelector(".deleteButton");
+
 /**
  * ========================= EVENTOS  =================================
  */
@@ -28,6 +31,9 @@ btnCloseNote.addEventListener("click", (evt) => {
   notes.style.display = "flex";
   modal.style.display = "none";
   addNote.style.display = "block";
+  document.querySelector("#input-id").value = "";
+  document.querySelector("#input-title").value = "";
+  document.querySelector("#input-content").value = "";
 });
 
 btnSaveNote.addEventListener("click", (evt) => {
@@ -47,11 +53,17 @@ const saveNote = (note) => {
   let notes = loadNotes();
   note.lastTime = new Date().getTime();
   if (note.id.length > 0) {
-    //?
+    note.id = parseInt(note.id);
+    notes.forEach((item, i) => {
+      if (item.id == note.id) {
+        notes[i] = note;
+      }
+    });
   } else {
     note.id = new Date().getTime();
+    document.querySelector("#input-id").value = note.id;
+    notes.push(note);
   }
-  notes.push(note);
   notes = JSON.stringify(notes);
   localStorage.setItem("notes", notes);
 };
@@ -69,6 +81,7 @@ const loadNotes = () => {
 const listNotes = () => {
   let listNotes = localStorage.getItem("notes");
   listNotes = JSON.parse(listNotes);
+  notes.innerHTML = "";
   listNotes.forEach((item) => {
     const divCard = document.createElement("div");
     divCard.className = "card";
@@ -81,14 +94,10 @@ const listNotes = () => {
     pContent.innerText = item.content;
     const pLastTime = document.createElement("p");
     let lastTime = new Date(item.lastTime).toLocaleDateString("pt-BR");
-    const pLastHour = document.createElement("p");
-    let lastHour = new Date(item.lastHour).toLocaleTimeString("pt-BR");
     pLastTime.innerText = "Ultima alteração: " + lastTime;
-    pLastHour.innerText = "Horário: " + lastHour;
     divCardBody.appendChild(h1);
     divCardBody.appendChild(pContent);
     divCardBody.appendChild(pLastTime);
-    divCardBody.appendChild(pLastHour);
 
     divCard.appendChild(divCardBody);
     notes.appendChild(divCard);
@@ -100,23 +109,34 @@ const listNotes = () => {
 };
 
 const showNote = (note) => {
-  
   notes.style.display = "none";
   addNote.style.display = "none";
   modalView.style.display = "block";
 
-  document.querySelector("#title-note").innerHTML ="<h1>" + note.title + "</h1>";
-  document.querySelector('#content-note').innerHTML = "<p>"+note.content+"</p>";
-  document.querySelector('#content-note').innerHTML += "<p>"+new Date(note.lastTime).toLocaleDateString('pt-BR')+"</p>";
+  document.querySelector("#title-note").innerHTML =
+    "<h1>" + note.title + "</h1>";
+  document.querySelector("#content-note").innerHTML =
+    "<p>" + note.content + "</p>";
+  document.querySelector("#content-note").innerHTML +=
+    "<p>" + new Date(note.lastTime).toLocaleDateString("pt-BR") + "</p>";
 
- /* document.querySelector('#content-note')
-  .appendChild(document.createElement('p')
-  .appendChild(document.createTextNode(note.content)));
+  btnEditNote.addEventListener("click", (evt) => {
+    evt.preventDefault();
+    if (confirm('Pressione "Ok" se deseja continuar.') == true) {
+      modalView.style.display = "none";
+      modal.style.display = "block";
+      document.querySelector("#input-id").value = note.id;
+      document.querySelector("#input-title").value = note.title;
+      document.querySelector("#input-content").value = note.content;
+    }
+  });
 
-  document.querySelector('#content-note')
-  .appendChild(document.createElement('p')
-  .appendChild(document.createTextNode(
-    new Date(note.lastTime).toLocaleDateString('pt-BR'))));*/
+  btnDeleteNote.addEventListener("click", (evt) => {
+    evt.preventDefault();
+    if (confirm('Pressione "Ok" se deseja continuar.') == true) {
+      
+    }
+  });
 };
 
 listNotes();
