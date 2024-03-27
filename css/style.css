@@ -65,4 +65,19 @@
     display:flex;
     gap:10px;
   }
+
+  .editButton{
+    border-radius: 3vw;
+    padding: 0.2vw;
+    margin-bottom: 1vw;
+    width: 5vw;
+    background-color: white;
+  }
+
+  .deleteButton{
+    border-radius: 3vw;
+    padding: 0.2vw;
+    width: 5vw;
+    background-color: white;
+  }
   
