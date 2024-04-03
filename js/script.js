@@ -108,6 +108,18 @@ const listNotes = () => {
   });
 };
 
+const deleteFunction = (note) => {
+  let todasNotas = loadNotes();
+  todasNotas.forEach((item, i) => {
+    if (item.id == note.id) {
+      todasNotas.splice(i, 1);
+    }
+  });
+  todasNotas = JSON.stringify(todasNotas);
+  localStorage.setItem("notes", todasNotas);
+  listNotes();
+};
+
 const showNote = (note) => {
   notes.style.display = "none";
   addNote.style.display = "none";
@@ -134,7 +146,9 @@ const showNote = (note) => {
   btnDeleteNote.addEventListener("click", (evt) => {
     evt.preventDefault();
     if (confirm('Pressione "Ok" se deseja continuar.') == true) {
-      
+      deleteFunction(note);
+      modalView.style.display = "none";
+      notes.style.display = "flex";
     }
   });
 };

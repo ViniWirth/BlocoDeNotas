@@ -3,8 +3,13 @@
     padding:0;
   }
   
+  body{
+    background-image: url(../images/background.jpg);
+    background-size: 100%;
+  }
+
   header{
-    border-bottom: 1px solid #1b85dc;
+    border-bottom: 3px solid white;
     height: 10vh;
     display:flex;
   }
@@ -16,6 +21,7 @@
   
   #logo img{
     height: 8vh;
+    margin-left: 2vw;
   }
 
   #display{
@@ -42,11 +48,13 @@
   }
   
   #modal-view{
-    border:1px solid #1b85dc;
+    border:3px solid white;
     position: absolute;
     display:none;
     width: 90vw;
     padding:10px;
+    background-color: white;
+    border-radius: 1.5vw;
   }
   
   #close-modal{
@@ -54,11 +62,13 @@
   }
   
   #modal{
-    border:1px solid #1b85dc;
+    border:3px solid white;
     position: absolute;
     padding:2vh 2vw;
     display:none;
     width: 90vw;
+    background-color: white;
+    border-radius: 1.5vw;
   }
   
   #controls-note{
@@ -80,4 +90,11 @@
     width: 5vw;
     background-color: white;
   }
+
+  a{
+    color: white;
+  }
   
+  #botaoSalvar{
+    color: #999999;
+  }
